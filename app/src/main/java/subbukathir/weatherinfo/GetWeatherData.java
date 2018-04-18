@@ -9,14 +9,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static subbukathir.weatherinfo.Constants.OPEN_WEATHER_MAP_API;
+
 
 /**
  * Created by subbukathir on 18-04-2018.
  */
 public class GetWeatherData {
-
-    private static final String OPEN_WEATHER_MAP_API =
-            "http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric";
 
     public static JSONObject getJSON(Context context, String city) {
         try {
@@ -25,7 +24,7 @@ public class GetWeatherData {
                     (HttpURLConnection) url.openConnection();
 
             connection.addRequestProperty("x-api-key",
-                    context.getString(R.string.open_weather_maps_app_id));
+                    Constants.WEATHER_API);
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));

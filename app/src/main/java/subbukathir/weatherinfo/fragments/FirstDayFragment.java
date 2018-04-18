@@ -8,8 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,7 +19,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import subbukathir.weatherinfo.CityPreference;
+import subbukathir.weatherinfo.MyPreferences;
 import subbukathir.weatherinfo.GetWeatherData;
 import subbukathir.weatherinfo.R;
 
@@ -50,7 +48,7 @@ public class FirstDayFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weather.ttf");
-        updateWeatherData(new CityPreference(getActivity()).getCity());
+        updateWeatherData(new MyPreferences(getActivity()).getCity());
     }
 
 

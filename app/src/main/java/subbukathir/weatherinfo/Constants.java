@@ -8,6 +8,8 @@ public class Constants {
 
     public static final String CITY = "city";
 
+    public static final String OPEN_WEATHER_MAP_API =
+            "http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric";
     public static final String BASE_URL = "api.openweathermap.org/data/2.5/forecast?";
     public static final String WEATHER_API = "69edfaaffb16d8dfc51612de0444089b";
 
