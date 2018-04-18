@@ -10,7 +10,9 @@ public class Constants {
 
     public static final String OPEN_WEATHER_MAP_API =
             "http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric";
-    public static final String BASE_URL = "api.openweathermap.org/data/2.5/forecast?";
+    //http://api.openweathermap.org/data/2.5/forecast/daily?q=Coimbatore,in&cnt=3&units=impeariel
+    public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";
     public static final String WEATHER_API = "69edfaaffb16d8dfc51612de0444089b";
 
+    public static final String WEATHER_ICON_URL = "http://openweathermap.org/img/w/";
 }

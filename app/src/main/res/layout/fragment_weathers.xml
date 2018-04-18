@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/space_margin">
+<android.support.v4.widget.NestedScrollView
+    style="@style/match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        style="@style/match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCurrentDate"
+            style="@style/text_view"
+            android:text="April 18, 10:53 PM" />
+
+        <TextView
+            android:id="@+id/tvDayNight"
+            style="@style/text_view"
+            android:layout_marginTop="@dimen/space_margin_small"
+            android:text="day 98 . night 73" />
+
+        <RelativeLayout
+            android:id="@+id/rlTempInfo"
+            style="@style/match_wrap"
+            android:layout_marginTop="@dimen/space_margin">
+
+            <RelativeLayout
+                android:id="@+id/rlTemperature"
+                style="@style/wrap_content"
+                android:layout_alignParentLeft="true">
+
+                <TextView
+                    android:id="@+id/tvCurrentTemp"
+                    style="@style/text_view"
+                    android:text="82"
+                    android:textSize="@dimen/bigger_text" />
+
+                <TextView
+                    android:id="@+id/tvCelsiusOrF"
+                    style="@style/text_view"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/tvCurrentTemp"
+                    android:text="@string/symbol_celsius"
+                    android:textSize="@dimen/celsius_text" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvTempStatus"
+                style="@style/text_view"
+                android:layout_alignParentLeft="true"
+                android:textSize="@dimen/celsius_text"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                style="@style/wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivWeatherIcon"
+                    style="@style/image_view_icon" />
+
+                <TextView
+                    android:id="@+id/tvWeatherStatus"
+                    style="@style/text_view"
+                    android:layout_marginTop="@dimen/space_margin_small"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvLblDetails"
+                style="@style/text_view"
+                android:text="@string/lbl_details" />
+
+            <LinearLayout
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/space_margin_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblHumidity"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/lbl_humidity"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/tvHumidity"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/space_margin_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblPressure"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/lbl_pressure"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/tvPressure"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/space_margin_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblSpeed"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/lbl_speed"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/tvSpeed"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/space_margin_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblClouds"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/lbl_clouds"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/tvClouds"
+                    style="@style/text_view_match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+</LinearLayout>

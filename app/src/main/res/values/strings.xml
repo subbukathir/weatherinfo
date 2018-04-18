@@ -17,4 +17,11 @@
     <string name="weather_drizzle">&#xf01c;</string>
 
     <string name="place_not_found">Sorry, no weather data found.</string>
+    <string name="symbol_celsius">℃</string>
+    <string name="lbl_details">Details</string>
+    <string name="lbl_humidity">Humidity</string>
+    <string name="lbl_pressure">Pressure</string>
+    <string name="lbl_speed">Speed</string>
+    <string name="lbl_clouds">Clouds</string>
+    <string name="symbol_fahrenheit">℉</string>
 </resources>
