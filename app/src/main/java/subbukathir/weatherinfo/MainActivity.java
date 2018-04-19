@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private boolean isGpsEnabled = false;
     private boolean isNetworkEnabled = false;
 
+    ViewPagerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,13 +257,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Toast.makeText(this, "Home celsius Click", Toast.LENGTH_SHORT).show();
                 MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"metric");
                 updateWeatherData();
-                //if(viewPager!=null) setupViewPager(viewPager);
+                refreshViewPager();
                 return true;
             case R.id.action_fahrenheit:
                 Toast.makeText(this, "Home fahrenheit Click", Toast.LENGTH_SHORT).show();
                 MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"imperial");
                 updateWeatherData();
-                //if(viewPager!=null) setupViewPager(viewPager);
+                refreshViewPager();
                 return true;
 
             default:
@@ -271,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private void setupViewPager(ViewPager viewPager)
     {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         firstDayFragment =new FirstDayFragment();
         secondDayFragment =new SecondDayFragment();
         thirdDayFragment =new ThirdDayFragment();
@@ -279,6 +281,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         adapter.addFragment(secondDayFragment,getDayFromCalendar(1).toUpperCase());
         adapter.addFragment(thirdDayFragment,getDayFromCalendar(2).toUpperCase());
         viewPager.setAdapter(adapter);
+    }
+
+    public void refreshViewPager(){
+        finish();
+        overridePendingTransition(R.anim.exit_to_left, R.anim.enter_from_right);
+        startActivity(getIntent());
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
     }
 
     private String getDayFromCalendar(int value){

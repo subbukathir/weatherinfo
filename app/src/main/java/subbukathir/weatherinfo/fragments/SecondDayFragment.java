@@ -22,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -96,11 +98,15 @@ public class SecondDayFragment extends Fragment {
 
         private void updateUI(){
             try {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR,1);
+                Date date = calendar.getTime();
+                SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy");
+
                 JSONObject weather = mResult.getJSONArray("weather").getJSONObject(0);
                 JSONObject temp = mResult.getJSONObject("temp");
-                DateFormat df = DateFormat.getDateTimeInstance();
-                String updatedOn = df.format(new Date(mResult.getLong("dt")*1000));
-                tvCurrentDate.setText("Last update: " + updatedOn);
+
+                tvCurrentDate.setText(format.format(date));
                 tvPressure.setText(mResult.getString("pressure")+"");
                 tvHumidity.setText(mResult.getString("humidity")+"%");
                 tvSpeed.setText(mResult.getString("speed")+"");
@@ -110,6 +116,8 @@ public class SecondDayFragment extends Fragment {
                 tvCurrentTemp.setText(temp.getString("day")+"");
                 tvCelsiusOrF.setText(MyPreferences.getUnits(getActivity())+"");
                 tvWeatherStatus.setText(weather.getString("description")+"");
+                tvDayNight.setText("Day "+ temp.getString("day")+ (char) 0x00B0 +"."+" Night "+ temp.getString("night")+ (char) 0x00B0);
+                tvTempStatus.setVisibility(View.GONE);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -157,7 +165,7 @@ public class SecondDayFragment extends Fragment {
                     if(MyPreferences.isNetworkAvailable(getActivity())){
                         final JSONObject json = GetForecastData.getJSON(getActivity());
                         final JSONObject data = GetWeatherData.getJSON(getActivity());
-                        if(json == null || data ==null){
+                        if(json == null){
                             handler.post(new Runnable(){
                                 public void run(){
                                     Toast.makeText(getActivity(),

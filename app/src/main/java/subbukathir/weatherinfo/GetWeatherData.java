@@ -22,7 +22,7 @@ public class GetWeatherData {
     public static JSONObject getJSON(Context context) {
         try {
             //URL url = new URL(String.format(OPEN_WEATHER_MAP_API, city));
-            String strUrl = WEATHER_API + MyPreferences.getPreference(MyPreferences.SHARED_CITY) +"&units="+MyPreferences.getPreference(MyPreferences.SHARED_UNITS);
+            String strUrl = OPEN_WEATHER_MAP_API + MyPreferences.getPreference(MyPreferences.SHARED_CITY) +"&units="+MyPreferences.getPreference(MyPreferences.SHARED_UNITS);
             URL url = new URL(strUrl);
             HttpURLConnection connection =
                     (HttpURLConnection) url.openConnection();
