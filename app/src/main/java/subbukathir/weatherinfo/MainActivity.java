@@ -1,6 +1,7 @@
 package subbukathir.weatherinfo;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,9 +13,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private boolean isNetworkEnabled = false;
 
     ViewPagerAdapter adapter;
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,8 +270,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 refreshViewPager();
                 return true;
 
+            case R.id.action_share:
+                mShareActionProvider =  (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+                Intent textShareIntent = new Intent(Intent.ACTION_SEND);
+                textShareIntent.putExtra(Intent.EXTRA_TEXT, MyPreferences.getPreference(MyPreferences.SHARED_CONTENT));
+                textShareIntent.setType("text/plain");
+                setShareIntent(textShareIntent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
         }
     }
 

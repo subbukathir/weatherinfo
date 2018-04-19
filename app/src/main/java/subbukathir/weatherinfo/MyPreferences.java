@@ -23,6 +23,7 @@ public class MyPreferences {
     public static final String SHARED_1DAY = "first_day";
     public static final String SHARED_2DAY = "second_day";
     public static final String SHARED_3DAY = "third_day";
+    public static final String SHARED_CONTENT = "share_content";
     private static String mUnits;
 
     public MyPreferences(Context context) {

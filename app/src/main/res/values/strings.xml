@@ -25,4 +25,5 @@
     <string name="lbl_speed">Speed</string>
     <string name="lbl_clouds">Clouds</string>
     <string name="symbol_fahrenheit">℉</string>
+    <string name="lbl_share">Share</string>
 </resources>

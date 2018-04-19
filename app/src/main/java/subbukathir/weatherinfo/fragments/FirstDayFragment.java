@@ -191,6 +191,11 @@ public class FirstDayFragment extends Fragment {
             tvTempStatus.setVisibility(View.GONE);
             tvDayNight.setVisibility(View.GONE);
 
+            String shareContent = "Today Weather\n"+temp.getString("temp")+""+MyPreferences.getUnits(getActivity()) +
+                    " with "+ weather.getString("description")+" Humidity : "+temp.getString("humidity")+"%" + " Speed : " +
+                    mResult.getJSONObject("wind").getString("speed")+"";
+            MyPreferences.savePreference(MyPreferences.SHARED_CONTENT,shareContent);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
