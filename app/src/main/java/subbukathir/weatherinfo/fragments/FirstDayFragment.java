@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -70,7 +73,7 @@ public class FirstDayFragment extends Fragment {
     private void updateWeatherData(final String city){
         new Thread(){
             public void run(){
-                final JSONObject json = GetWeatherData.getJSON(getActivity(), city);
+                final JSONObject json = GetWeatherData.getJSON(getActivity());
                 if(json == null){
                     handler.post(new Runnable(){
                         public void run(){
@@ -146,5 +149,30 @@ public class FirstDayFragment extends Fragment {
             }
         }
         weatherIcon.setText(icon);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_celsius:
+                Toast.makeText(getActivity(), "Home celsius Click", Toast.LENGTH_SHORT).show();
+                MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"metric");
+                //updateWeatherData();
+                return true;
+            case R.id.action_fahrenheit:
+                Toast.makeText(getActivity(), "Home fahrenheit Click", Toast.LENGTH_SHORT).show();
+                MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"imperial");
+                //updateWeatherData();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -3,6 +3,7 @@ package subbukathir.weatherinfo;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -46,6 +47,18 @@ public class GetForecastData {
             // successful
             if (data.getInt("cod") != 200) {
                 return null;
+            }else{
+                try {
+                    JSONArray array = data.getJSONArray("list");
+                    if(array.length()>0){
+                        MyPreferences.savePreference(MyPreferences.SHARED_1DAY,array.getString(0));
+                        MyPreferences.savePreference(MyPreferences.SHARED_2DAY,array.getString(1));
+                        MyPreferences.savePreference(MyPreferences.SHARED_3DAY,array.getString(2));
+                    }
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
 
             return data;

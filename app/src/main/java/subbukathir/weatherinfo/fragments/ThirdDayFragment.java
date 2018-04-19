@@ -2,14 +2,19 @@ package subbukathir.weatherinfo.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +27,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import subbukathir.weatherinfo.Constants;
+import subbukathir.weatherinfo.GetForecastData;
+import subbukathir.weatherinfo.GetWeatherData;
+import subbukathir.weatherinfo.MainActivity;
 import subbukathir.weatherinfo.MyPreferences;
 import subbukathir.weatherinfo.R;
 
@@ -61,10 +69,11 @@ public class ThirdDayFragment extends Fragment {
     TextView tvTempStatus;
 
     private JSONObject mResult;
+    private Handler handler;
 
 
     public ThirdDayFragment() {
-        // Required empty public constructor
+        handler = new Handler();
     }
 
 
@@ -123,4 +132,63 @@ public class ThirdDayFragment extends Fragment {
         }
     }
 
-   }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_celsius:
+                Toast.makeText(getActivity(), "Home celsius Click", Toast.LENGTH_SHORT).show();
+                MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"metric");
+                updateWeatherData();
+                return true;
+            case R.id.action_fahrenheit:
+                Toast.makeText(getActivity(), "Home fahrenheit Click", Toast.LENGTH_SHORT).show();
+                MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"imperial");
+                updateWeatherData();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateWeatherData(){
+        new Thread(){
+            public void run(){
+                if(MyPreferences.isNetworkAvailable(getActivity())){
+                    final JSONObject json = GetForecastData.getJSON(getActivity());
+                    final JSONObject data = GetWeatherData.getJSON(getActivity());
+                    if(json == null || data ==null){
+                        handler.post(new Runnable(){
+                            public void run(){
+                                Toast.makeText(getActivity(),
+                                        getActivity().getString(R.string.place_not_found),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }else {
+                        try {
+                            mResult = new JSONObject(MyPreferences.getPreference(MyPreferences.SHARED_3DAY));
+                            updateUI();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }else {
+                    handler.post(new Runnable(){
+                        public void run(){
+                            Toast.makeText(getActivity(),
+                                    getActivity().getString(R.string.check_internet_connection),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+            }
+        }.start();
+    }
+}

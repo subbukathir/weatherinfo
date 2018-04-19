@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -213,33 +214,28 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private void updateWeatherData(){
         new Thread(){
             public void run(){
-                final JSONObject json = GetForecastData.getJSON(MainActivity.this);
-                if(json == null){
+                if(MyPreferences.isNetworkAvailable(MainActivity.this)){
+                    final JSONObject json = GetForecastData.getJSON(MainActivity.this);
+                    final JSONObject data = GetWeatherData.getJSON(MainActivity.this);
+                    if(json == null || data ==null){
+                        handler.post(new Runnable(){
+                            public void run(){
+                                Toast.makeText(MainActivity.this,
+                                        MainActivity.this.getString(R.string.place_not_found),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }else {
                     handler.post(new Runnable(){
                         public void run(){
                             Toast.makeText(MainActivity.this,
-                                    MainActivity.this.getString(R.string.place_not_found),
+                                    MainActivity.this.getString(R.string.check_internet_connection),
                                     Toast.LENGTH_LONG).show();
                         }
                     });
-                } else {
-                    handler.post(new Runnable(){
-                        public void run(){
-                            //renderWeather(json);
-                            try {
-                                JSONArray array = json.getJSONArray("list");
-                                if(array.length()>0){
-                                    MyPreferences.savePreference(MyPreferences.SHARED_1DAY,array.getString(0));
-                                    MyPreferences.savePreference(MyPreferences.SHARED_2DAY,array.getString(1));
-                                    MyPreferences.savePreference(MyPreferences.SHARED_3DAY,array.getString(2));
-                                }
-                            }catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
                 }
+
             }
         }.start();
     }
@@ -259,13 +255,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Toast.makeText(this, "Home celsius Click", Toast.LENGTH_SHORT).show();
                 MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"metric");
                 updateWeatherData();
-                if(viewPager!=null) setupViewPager(viewPager);
+                //if(viewPager!=null) setupViewPager(viewPager);
                 return true;
             case R.id.action_fahrenheit:
                 Toast.makeText(this, "Home fahrenheit Click", Toast.LENGTH_SHORT).show();
                 MyPreferences.savePreference(MyPreferences.SHARED_UNITS,"imperial");
                 updateWeatherData();
-                if(viewPager!=null) setupViewPager(viewPager);
+                //if(viewPager!=null) setupViewPager(viewPager);
                 return true;
 
             default:
